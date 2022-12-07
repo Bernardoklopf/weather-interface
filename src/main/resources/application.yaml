@@ -1,0 +1,21 @@
+openWeather:
+  baseUrl: "https://api.openweathermap.org"
+  appId: "6d6c12fa59cf5c6aee02b91b1c80005a"
+
+spring:
+  config:
+    activate:
+      on-profile: default
+  datasource:
+    hikari:
+      connection-test-query: SELECT 1L
+      minimum-idle: 1
+      maximum-pool-size: 10
+      pool-name: db_fintech-collections-database-pool
+      auto-commit: false
+      connection-timeout: 30000
+    url: "${DB_URL:jdbc:postgresql://localhost:5434/db_weather_app?ssl=false}"
+    username: "${DB_USER:postgres}"
+    password: "${DB_PASSWORD:123456}"
+  jpa:
+    show-sql: false

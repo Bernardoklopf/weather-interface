@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  database:
+    container_name: "postgres_weather_app"
+    restart: always
+    image: postgres:14.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db_weather_app
+      TZ: GMT
+      PGDATA: /postgres_data
+    ports:
+    - "5434:5432"
+#  redis:
+#    image: redis
+#    restart: always
+#    ports:
+#      - "6381:6379"
