@@ -1,11 +1,11 @@
 package com.app.weather.service
 
 import com.app.weather.component.OpenWeatherForecastComponent
-import com.app.weather.vo.ForecastVo
 import com.app.weather.entity.City
 import com.app.weather.entity.Temperature
 import com.app.weather.repository.TemperatureRepository
 import com.app.weather.util.extensions.*
+import com.app.weather.vo.ForecastVo
 import org.springframework.stereotype.Service
 
 @Service
@@ -35,7 +35,9 @@ class TemperatureService(
             city,
             tomorrow().first.toDate(),
             fiveDaysFromNow().toDate()
-        ).ifEmpty { null } //TODO: Validate if has data for five full days, else return null
+        ).filter {
+            it.date.belongsToFiveDaysFromNoww()
+        }.ifEmpty { null }
 
     private fun saveForecastAsTemperature(forecast: ForecastVo): List<Temperature> = temperatureRepository
         .saveAll(forecast.toListTemperature()).toList()
