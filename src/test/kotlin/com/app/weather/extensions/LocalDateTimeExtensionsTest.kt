@@ -1,5 +1,6 @@
 package com.app.weather.extensions
 
+import com.app.weather.util.extensions.fiveDaysFromNowEndOfTheDay
 import com.app.weather.util.extensions.isFiveDaysFromNow
 import com.app.weather.util.extensions.isTomorrow
 import com.app.weather.util.extensions.tomorrow
@@ -39,7 +40,7 @@ class LocalDateTimeExtensionsTest {
     }
 
     @Test
-    fun fiveDaysFromNowEndOfTheDay() {
+    fun fiveDaysFromNowEndOfTheDayTest() {
         val fiveDaysFromNow = LocalDateTime.now()
             .plusDays(5)
             .withHour(23)
