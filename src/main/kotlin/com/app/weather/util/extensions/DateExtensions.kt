@@ -7,7 +7,7 @@ import java.util.*
 
 fun Date.belongsToTomorrow() = this.toLocalDateTime().isTomorrow()
 
-fun Date.belongsToFiveDaysFromNoww() = this.toLocalDateTime().isFiveDaysFromNow()
+fun Date.belongsToFiveDaysFromNow() = this.toLocalDateTime().isFiveDaysFromNow()
 
 fun Date.toLocalDateTime(): LocalDateTime {
     val instant = Instant.ofEpochMilli(this.time)

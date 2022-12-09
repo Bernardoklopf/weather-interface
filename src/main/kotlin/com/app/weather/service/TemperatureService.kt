@@ -34,9 +34,9 @@ class TemperatureService(
         .findAllByCityAndDateBetween(
             city,
             tomorrow().first.toDate(),
-            fiveDaysFromNow().toDate()
+            fiveDaysFromNowEndOfTheDay().toDate()
         ).filter {
-            it.date.belongsToFiveDaysFromNoww()
+            it.date.belongsToFiveDaysFromNow()
         }.ifEmpty { null }
 
     private fun saveForecastAsTemperature(forecast: ForecastVo): List<Temperature> = temperatureRepository

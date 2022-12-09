@@ -1,6 +1,5 @@
 package com.app.weather.entity
 
-import com.app.weather.util.extensions.normalized
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
