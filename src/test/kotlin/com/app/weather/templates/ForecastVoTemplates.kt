@@ -1,11 +1,11 @@
 package com.app.weather.templates
 
-import com.app.weather.vo.*
 import com.app.weather.util.extensions.toLocalDateTime
+import com.app.weather.vo.*
 import java.math.BigDecimal
 
 
-fun forecastDtoTemplate() = ForecastVo(
+fun forecastVoTemplate() = ForecastVo(
     city = CityVo(
         id = 3448439,
         name = "São Paulo",

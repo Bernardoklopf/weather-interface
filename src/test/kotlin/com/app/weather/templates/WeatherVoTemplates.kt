@@ -5,7 +5,7 @@ import com.app.weather.vo.TemperatureVo
 import com.app.weather.vo.WeatherVo
 import java.math.BigDecimal
 
-fun weatherDtoTemplate() = WeatherVo(
+fun weatherVoTemplate() = WeatherVo(
     id = 3448439,
     coord = CoordinatesVo(BigDecimal("-23.5475"), BigDecimal("-46.6361")),
     main = TemperatureVo(
