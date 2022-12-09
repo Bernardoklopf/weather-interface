@@ -1,6 +1,6 @@
 openWeather:
   baseUrl: "https://api.openweathermap.org"
-  appId: "6d6c12fa59cf5c6aee02b91b1c80005a"
+  appId: ""
 
 spring:
   config:
