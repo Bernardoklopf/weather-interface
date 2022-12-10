@@ -11,7 +11,7 @@ spring:
       connection-test-query: SELECT 1L
       minimum-idle: 1
       maximum-pool-size: 10
-      pool-name: db_fintech-collections-database-pool
+      pool-name: db_weather_app_database_pool
       auto-commit: false
       connection-timeout: 30000
     url: "${DB_URL:jdbc:postgresql://localhost:5434/db_weather_app?ssl=false}"
