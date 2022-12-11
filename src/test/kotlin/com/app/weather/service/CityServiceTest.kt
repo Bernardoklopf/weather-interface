@@ -36,9 +36,9 @@ class CityServiceTest {
         @Test
         fun `find city that exists`() {
 
-            every { cityRepository.findById(123456) } returns Optional.of(city)
+            every { cityRepository.findById(city.id) } returns Optional.of(city)
 
-            val result = cityService.findOrCreateCity(123456)
+            val result = cityService.findOrCreateCity(city.id)
 
             assertThat(result).isEqualTo(city)
             verify(exactly = 0) { cityRepository.save(any()) }
@@ -49,14 +49,14 @@ class CityServiceTest {
 
             val city = cityTemplate(cityNotFound = true)
 
-            every { cityRepository.findById(123456) } returns Optional.of(city)
+            every { cityRepository.findById(city.id) } returns Optional.of(city)
 
-            assertThrows<InvalidCityCodeException> { cityService.findOrCreateCity(123456) }
+            assertThrows<InvalidCityCodeException> { cityService.findOrCreateCity(city.id) }
             verify(exactly = 0) { cityRepository.save(any()) }
         }
 
         @Test
-        fun `create city that doesn't exists`() {
+        fun `create city that doesn't exists yet`() {
 
             val city = City(id = 654321)
 
@@ -81,7 +81,7 @@ class CityServiceTest {
 
             every { cityRepository.findById(city.id) } returns Optional.of(city)
 
-            val result = cityService.findByIdOrNull(123456)
+            val result = cityService.findByIdOrNull(city.id)
 
             assertThat(result).isEqualTo(city)
         }
@@ -89,9 +89,9 @@ class CityServiceTest {
         @Test
         fun `should return null`() {
 
-            every { cityRepository.findById(654321) } returns Optional.empty()
+            every { cityRepository.findById(city.id) } returns Optional.empty()
 
-            val result = cityService.findByIdOrNull(654321)
+            val result = cityService.findByIdOrNull(city.id)
 
             assertThat(result).isNull()
         }

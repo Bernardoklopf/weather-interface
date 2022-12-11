@@ -4,12 +4,12 @@ import com.app.weather.entity.City
 import java.math.BigDecimal
 
 fun cityTemplate(
-    id: Int = 123456,
-    name: String = "Copenhagen",
-    state: String = "Capital Region",
-    country: String = "Denmark",
-    lat: BigDecimal = BigDecimal("55.6867243"),
-    lon: BigDecimal = BigDecimal("12.5700724"),
+    id: Int = 3448439,
+    name: String = "São Paulo",
+    state: String = "",
+    country: String = "BR",
+    lat: BigDecimal = BigDecimal("-23.5506507"),
+    lon: BigDecimal = BigDecimal("-46.6333824"),
     numberOfRequests: Int = 1,
     cityNotFound: Boolean = false
 ) = City(
