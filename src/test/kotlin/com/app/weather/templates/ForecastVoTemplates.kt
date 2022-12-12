@@ -9,7 +9,7 @@ fun forecastVoTemplate() = ForecastVo(
     city = CityVo(
         id = 3448439,
         name = "São Paulo",
-        coord = CoordinatesVo(BigDecimal("-23.5475"), BigDecimal("-46.6361")),
+        coord = CoordinatesVo(BigDecimal("-23.5506507"), BigDecimal("-46.6333824")),
         country = "BR"
     ),
     list = listOf(
@@ -23,7 +23,7 @@ fun forecastVoTemplate() = ForecastVo(
             )
         ),
         ListWeatherVo(
-            dt_txt = "2022-12-06 06:00:00".toLocalDateTime(),
+            dt_txt = "2022-12-07 03:00:00".toLocalDateTime(),
             main = TemperatureVo(
                 temp = BigDecimal("20.22"),
                 feels_like = BigDecimal("20.75"),
@@ -32,7 +32,7 @@ fun forecastVoTemplate() = ForecastVo(
             )
         ),
         ListWeatherVo(
-            dt_txt = "2022-12-06 09:00:00".toLocalDateTime(),
+            dt_txt = "2022-12-08 03:00:00".toLocalDateTime(),
             main = TemperatureVo(
                 temp = BigDecimal("19.72"),
                 feels_like = BigDecimal("20.2"),
@@ -41,7 +41,25 @@ fun forecastVoTemplate() = ForecastVo(
             )
         ),
         ListWeatherVo(
-            dt_txt = "2022-12-07 03:00:00".toLocalDateTime(),
+            dt_txt = "2022-12-09 03:00:00".toLocalDateTime(),
+            main = TemperatureVo(
+                temp = BigDecimal("19.28"),
+                feels_like = BigDecimal("19.82"),
+                temp_max = BigDecimal("19.28"),
+                temp_min = BigDecimal("19.28")
+            )
+        ),
+        ListWeatherVo(
+            dt_txt = "2022-12-10 03:00:00".toLocalDateTime(),
+            main = TemperatureVo(
+                temp = BigDecimal("19.28"),
+                feels_like = BigDecimal("19.82"),
+                temp_max = BigDecimal("19.28"),
+                temp_min = BigDecimal("19.28")
+            )
+        ),
+        ListWeatherVo(
+            dt_txt = "2022-12-11 03:00:00".toLocalDateTime(),
             main = TemperatureVo(
                 temp = BigDecimal("19.28"),
                 feels_like = BigDecimal("19.82"),
@@ -137,7 +155,7 @@ fun forecastJsonTemplate() = """
                 "sys": {
                     "pod": "n"
                 },
-                "dt_txt": "2022-12-06 06:00:00"
+                "dt_txt": "2022-12-07 03:00:00"
             },
             {
                 "dt": 1670317200,
@@ -176,7 +194,7 @@ fun forecastJsonTemplate() = """
                 "sys": {
                     "pod": "d"
                 },
-                "dt_txt": "2022-12-06 09:00:00"
+                "dt_txt": "2022-12-08 03:00:00"
             },
             {
                 "dt": 1670382000,
@@ -215,15 +233,93 @@ fun forecastJsonTemplate() = """
                 "sys": {
                     "pod": "n"
                 },
-                "dt_txt": "2022-12-07 03:00:00"
+                "dt_txt": "2022-12-09 03:00:00"
+            },
+            {
+                "dt": 1670382000,
+                "main": {
+                    "temp": 19.28,
+                    "feels_like": 19.82,
+                    "temp_min": 19.28,
+                    "temp_max": 19.28,
+                    "pressure": 1014,
+                    "sea_level": 1014,
+                    "grnd_level": 928,
+                    "humidity": 98,
+                    "temp_kf": 0
+                },
+                "weather": [
+                    {
+                        "id": 502,
+                        "main": "Rain",
+                        "description": "heavy intensity rain",
+                        "icon": "10n"
+                    }
+                ],
+                "clouds": {
+                    "all": 100
+                },
+                "wind": {
+                    "speed": 2.49,
+                    "deg": 3,
+                    "gust": 5.67
+                },
+                "visibility": 10000,
+                "pop": 1,
+                "rain": {
+                    "3h": 23.06
+                },
+                "sys": {
+                    "pod": "n"
+                },
+                "dt_txt": "2022-12-10 03:00:00"
+            },
+            {
+                "dt": 1670382000,
+                "main": {
+                    "temp": 19.28,
+                    "feels_like": 19.82,
+                    "temp_min": 19.28,
+                    "temp_max": 19.28,
+                    "pressure": 1014,
+                    "sea_level": 1014,
+                    "grnd_level": 928,
+                    "humidity": 98,
+                    "temp_kf": 0
+                },
+                "weather": [
+                    {
+                        "id": 502,
+                        "main": "Rain",
+                        "description": "heavy intensity rain",
+                        "icon": "10n"
+                    }
+                ],
+                "clouds": {
+                    "all": 100
+                },
+                "wind": {
+                    "speed": 2.49,
+                    "deg": 3,
+                    "gust": 5.67
+                },
+                "visibility": 10000,
+                "pop": 1,
+                "rain": {
+                    "3h": 23.06
+                },
+                "sys": {
+                    "pod": "n"
+                },
+                "dt_txt": "2022-12-11 03:00:00"
             }
         ],
         "city": {
             "id": 3448439,
             "name": "São Paulo",
             "coord": {
-                "lat": -23.5475,
-                "lon": -46.6361
+                "lat": -23.5506507,
+                "lon": -46.6333824
             },
             "country": "BR",
             "population": 0,
