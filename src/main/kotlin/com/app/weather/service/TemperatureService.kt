@@ -3,6 +3,7 @@ package com.app.weather.service
 import com.app.weather.component.OpenWeatherForecastComponent
 import com.app.weather.entity.City
 import com.app.weather.entity.Temperature
+import com.app.weather.exceptions.ForecastMissingDataException
 import com.app.weather.repository.TemperatureRepository
 import com.app.weather.util.extensions.*
 import com.app.weather.vo.ForecastVo
@@ -18,38 +19,45 @@ class TemperatureService(
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-    fun findOrRequestTemperatureForTomorrow(city: City) = getTemperatureForTomorrow(city)
+    fun findOrRequestTemperatureForTomorrow(city: City) = getTemperatureForTomorrowOrNull(city)
         ?: saveForecastAsTemperature(openWeatherForecastComponent.getForecast(city))
             .filter {
                 it.date.belongsToTomorrow()
-            }.also { logger.debug("Temperature for tomorrow doesn't exist. Resquesting for city $city") }
+            }.also { logger.info("Temperature for tomorrow doesn't exist. Resquesting for city $city") }
 
-    fun findOrRequestTemperatureNextFiveDays(city: City) = getTemperatureForNextFiveDays(city)
+    fun findOrRequestTemperatureNextFiveDays(city: City) = getTemperatureForNextFiveDaysOrNull(city)
         ?: saveForecastAsTemperature(openWeatherForecastComponent.getForecast(city)).also {
-            logger.debug("Temperature for next five full days doesn't exist. Resquesting for city $city")
+            if (it.existTemperatureForNextFiveDaysOrNull() == null) throw ForecastMissingDataException()
+                logger.info("Temperature for next five full days doesn't exist. Resquesting for city $city")
         }
 
-    private fun getTemperatureForTomorrow(city: City): List<Temperature>? = temperatureRepository
+    private fun getTemperatureForTomorrowOrNull(city: City): List<Temperature>? = temperatureRepository
         .findAllByCityAndDateBetween(
             city,
             tomorrow().first.toDate(),
             tomorrow().second.toDate()
         ).ifEmpty { null }
         .also {
-            logger.debug("Finding temperature for tomorrow for city id = $city")
+            logger.info("Finding temperature for tomorrow for city id = $city")
         }
 
-    private fun getTemperatureForNextFiveDays(city: City): List<Temperature>? = temperatureRepository
+    private fun getTemperatureForNextFiveDaysOrNull(city: City): List<Temperature>? = temperatureRepository
         .findAllByCityAndDateBetween(
             city,
             tomorrow().first.toDate(),
             fiveDaysFromNowEndOfTheDay().toDate()
-        ).filter {
-            it.date.belongsToFiveDaysFromNow()
-        }.ifEmpty { null }
+        ).existTemperatureForNextFiveDaysOrNull()
         .also {
-            logger.debug("Finding temperature for next five days for city id = $city")
+            logger.info("Finding temperature for next five days for city id = $city")
         }
+
+    private fun List<Temperature>.existTemperatureForNextFiveDaysOrNull() = let { list ->
+        if (list.any { temp ->
+                temp.date.belongsToFiveDaysFromNow()
+            }
+        ) list
+        else null
+    }
 
     private fun saveForecastAsTemperature(forecast: ForecastVo): List<Temperature> =
         temperatureRepository.saveAll(forecast.toListTemperature()).toList()
