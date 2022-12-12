@@ -28,6 +28,8 @@ class ForecastServiceTest {
         cityService = mockk()
 
         forecastService = ForecastService(temperatureService, cityService)
+
+        every { cityService.incrementCityRequest(any()) } returns null
     }
 
     @AfterEach

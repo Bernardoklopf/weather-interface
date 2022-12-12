@@ -5,7 +5,9 @@ import com.app.weather.dto.toTemperatureDto
 import com.app.weather.entity.Temperature
 import com.app.weather.enums.UnitType.METRIC
 import com.app.weather.enums.toUnitType
+import com.app.weather.exceptions.CityNotFoundException
 import com.app.weather.util.extensions.convert
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
@@ -14,11 +16,20 @@ class ForecastService(
     private val temperatureService: TemperatureService,
     private val cityService: CityService
 ) {
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun getSummary(unit: String, desiredTemperature: Int, citiesIds: List<Int>): List<Int> =
         citiesIds.filter { cityId ->
             cityService.findOrCreateCity(cityId).let { city ->
-                temperatureService.findOrRequestTemperatureForTomorrow(city)
+                try {
+                    temperatureService.findOrRequestTemperatureForTomorrow(city).also {
+                        cityService.incrementCityRequest(city)
+                    }
+                } catch (e: CityNotFoundException) {
+                    cityService.setCityNotFoundFlag(city)
+                    logger.warn("City not found: $city")
+                    return emptyList()
+                }
             }.hasAnyTemperatureAbove(
                 BigDecimal(desiredTemperature).convert(from = unit.toUnitType(), to = METRIC)
             )

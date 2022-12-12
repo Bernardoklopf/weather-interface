@@ -2,6 +2,8 @@ package com.app.weather.component
 
 import com.app.weather.entity.City
 import com.app.weather.enums.UnitType
+import com.app.weather.exceptions.CityNotFoundException
+import com.app.weather.exceptions.FailedToGetForecastException
 import com.app.weather.util.extensions.parseJson
 import com.app.weather.vo.ForecastVo
 import com.app.weather.vo.WeatherVo
@@ -29,11 +31,13 @@ class OpenWeatherForecastComponent {
 
         val request = Request.Builder().url(url).get().build()
 
-        return client.newCall(request).execute().use {
-            it.body!!.string().parseJson(ForecastVo::class)
+        val response = client.newCall(request).execute()
+
+        return when {
+            response.isSuccessful -> response.body!!.string().parseJson(ForecastVo::class)
+            response.message == "city not found" -> throw CityNotFoundException(city)
+            else -> throw FailedToGetForecastException(request, response)
         }
-        //TODO: Incremet the counter of the city +1
-        //TODO: Threat if the city was not found. Set the flag `cityNotFound` of the city, to true
     }
 
     fun getWeather(

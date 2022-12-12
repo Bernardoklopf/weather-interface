@@ -20,4 +20,20 @@ class CityService(
             ).also { if (it.cityNotFound) throw InvalidCityCodeException("$id") }
 
     fun findByIdOrNull(id: Int): City? = cityRepository.findById(id).orElse(null)
+
+    fun setCityNotFoundFlag(city: City) = findByIdOrNull(city.id)?.let {
+        cityRepository.save(
+            it.copy(
+                cityNotFound = true
+            )
+        )
+    }
+
+    fun incrementCityRequest(city: City) = findByIdOrNull(city.id)?.let {
+        cityRepository.save(
+            it.copy(
+                numberOfRequests = it.numberOfRequests+1
+            )
+        )
+    }
 }

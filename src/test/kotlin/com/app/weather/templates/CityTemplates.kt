@@ -10,7 +10,7 @@ fun cityTemplate(
     country: String = "BR",
     lat: BigDecimal = BigDecimal("-23.5506507"),
     lon: BigDecimal = BigDecimal("-46.6333824"),
-    numberOfRequests: Int = 1,
+    numberOfRequests: Int = 0,
     cityNotFound: Boolean = false
 ) = City(
     id = id,

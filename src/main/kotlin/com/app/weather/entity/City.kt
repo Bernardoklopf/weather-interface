@@ -23,7 +23,7 @@ data class City(
 
     val lon: BigDecimal = BigDecimal.ZERO,
 
-    val numberOfRequests: Int = 1,
+    val numberOfRequests: Int = 0,
 
     val cityNotFound: Boolean = false
 
