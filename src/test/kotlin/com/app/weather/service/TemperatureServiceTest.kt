@@ -1,7 +1,6 @@
 package com.app.weather.service
 
 import com.app.weather.component.OpenWeatherForecastComponent
-import com.app.weather.entity.City
 import com.app.weather.entity.Temperature
 import com.app.weather.repository.TemperatureRepository
 import com.app.weather.templates.cityTemplate
@@ -10,7 +9,10 @@ import com.app.weather.templates.temperatureListTemplate
 import com.app.weather.util.extensions.fiveDaysFromNowEndOfTheDay
 import com.app.weather.util.extensions.toDate
 import com.app.weather.util.extensions.tomorrow
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.unmockkAll
+import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -37,9 +39,6 @@ class TemperatureServiceTest {
         openWeatherForecastComponent = mockk()
 
         temperatureService = TemperatureService(temperatureRepository, openWeatherForecastComponent)
-
-        mockkConstructor(Temperature::class)
-        mockkConstructor(City::class)
 
         every { openWeatherForecastComponent.getForecast(city) } returns forecastVoTemplate
     }
