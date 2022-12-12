@@ -2,8 +2,10 @@ package com.app.weather.service
 
 import com.app.weather.dto.TemperatureDto
 import com.app.weather.dto.toTemperatureDto
-import com.app.weather.vo.TemperatureVo
 import com.app.weather.entity.Temperature
+import com.app.weather.enums.UnitType.METRIC
+import com.app.weather.enums.toUnitType
+import com.app.weather.util.extensions.convert
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
@@ -17,17 +19,19 @@ class ForecastService(
         citiesIds.filter { cityId ->
             cityService.findOrCreateCity(cityId).let { city ->
                 temperatureService.findOrRequestTemperatureForTomorrow(city)
-            }.hasAnyTemperatureAbove(desiredTemperature)
+            }.hasAnyTemperatureAbove(
+                BigDecimal(desiredTemperature).convert(from = unit.toUnitType(), to = METRIC)
+            )
         }
 
-    private fun List<Temperature>.hasAnyTemperatureAbove(temperature: Int) = any {
+    private fun List<Temperature>.hasAnyTemperatureAbove(temperature: BigDecimal) = any {
         it.temp_min >= BigDecimal(temperature.toString())
     }
 
-    fun getForecast(cityId: Int): List<TemperatureDto> =
+    fun getForecast(cityId: Int, unit: String): List<TemperatureDto> =
         cityService.findOrCreateCity(cityId).let { city ->
             temperatureService.findOrRequestTemperatureNextFiveDays(city).map {
-                it.toTemperatureDto()
+                it.toTemperatureDto(unit.toUnitType())
             }
         }
 }

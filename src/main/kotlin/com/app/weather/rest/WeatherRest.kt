@@ -16,6 +16,7 @@ class WeatherRest(private val forecastService: ForecastService) {
 
     @GetMapping("locations/{location_id}")
     fun getForecast(
-        @PathVariable("location_id") location: Int
-    ) = forecastService.getForecast(location)
+        @PathVariable("location_id") location: Int,
+        @RequestParam("unit") unit: String = "celsius"
+    ) = forecastService.getForecast(location, unit)
 }
