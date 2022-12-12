@@ -18,13 +18,13 @@ class TemperatureService(
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-    fun findOrRequestTemperatureForTomorrow(city: City) = getTemperatureForTomorrowOrNull(city)
+    fun findOrRequestTemperatureForTomorrow(city: City): List<Temperature> = getTemperatureForTomorrowOrNull(city)
         ?: saveForecastAsTemperature(openWeatherForecastComponent.getForecast(city))
             .filter {
                 it.date.belongsToTomorrow()
             }.also { logger.info("Temperature for tomorrow doesn't exist. Resquesting for city $city") }
 
-    fun findOrRequestTemperatureNextFiveDays(city: City) = getTemperatureForNextFiveDaysOrNull(city)
+    fun findOrRequestTemperatureNextFiveDays(city: City): List<Temperature> = getTemperatureForNextFiveDaysOrNull(city)
         ?: saveForecastAsTemperature(openWeatherForecastComponent.getForecast(city)).also {
             logger.info("Temperature for next five full days doesn't exist. Resquesting for city $city")
         }

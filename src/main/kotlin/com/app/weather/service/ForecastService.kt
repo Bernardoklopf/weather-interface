@@ -23,7 +23,7 @@ class ForecastService(
             cityService.findOrCreateCity(cityId).let { city ->
                 try {
                     temperatureService.findOrRequestTemperatureForTomorrow(city).also {
-                        cityService.incrementCityRequest(city)
+                        cityService.updateAndIncrementCityRequest(city)
                     }
                 } catch (e: CityNotFoundException) {
                     cityService.setCityNotFoundFlag(city)
@@ -39,7 +39,7 @@ class ForecastService(
         it.temp_min >= BigDecimal(temperature.toString())
     }
 
-    fun getForecast(cityId: Int, unit: String): List<TemperatureDto> =
+    fun getForecast(cityId: Int, unit: String?): List<TemperatureDto> =
         cityService.findOrCreateCity(cityId).let { city ->
             temperatureService.findOrRequestTemperatureNextFiveDays(city).map {
                 it.toTemperatureDto(unit.toUnitType())

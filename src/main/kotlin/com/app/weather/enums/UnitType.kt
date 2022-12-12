@@ -7,9 +7,10 @@ enum class UnitType(val queryParam: String) {
     IMPERIAL("imperial")
 }
 
-fun String.toUnitType() =
+fun String?.toUnitType() =
     when(this){
         "celsius" -> UnitType.METRIC
         "fahrenheit" -> UnitType.IMPERIAL
+        null -> UnitType.METRIC
         else -> throw UnitNotFoundException(this)
     }

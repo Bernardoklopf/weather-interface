@@ -29,7 +29,7 @@ class CityService(
         )
     }
 
-    fun incrementCityRequest(city: City) = findByIdOrNull(city.id)?.let {
+    fun updateAndIncrementCityRequest(city: City) = findByIdOrNull(city.id)?.let {
         cityRepository.save(
             it.copy(
                 numberOfRequests = it.numberOfRequests+1
