@@ -3,7 +3,6 @@ package com.app.weather.service
 import com.app.weather.component.OpenWeatherForecastComponent
 import com.app.weather.entity.City
 import com.app.weather.entity.Temperature
-import com.app.weather.exceptions.ForecastMissingDataException
 import com.app.weather.repository.TemperatureRepository
 import com.app.weather.util.extensions.*
 import com.app.weather.vo.ForecastVo
@@ -27,8 +26,7 @@ class TemperatureService(
 
     fun findOrRequestTemperatureNextFiveDays(city: City) = getTemperatureForNextFiveDaysOrNull(city)
         ?: saveForecastAsTemperature(openWeatherForecastComponent.getForecast(city)).also {
-            if (it.existTemperatureForNextFiveDaysOrNull() == null) throw ForecastMissingDataException()
-                logger.info("Temperature for next five full days doesn't exist. Resquesting for city $city")
+            logger.info("Temperature for next five full days doesn't exist. Resquesting for city $city")
         }
 
     private fun getTemperatureForTomorrowOrNull(city: City): List<Temperature>? = temperatureRepository
