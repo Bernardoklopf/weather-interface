@@ -3,10 +3,10 @@ package com.app.weather.entity
 import jakarta.persistence.*
 import java.io.Serializable
 import java.math.BigDecimal
-import java.util.Date
+import java.util.*
 
 @Entity
-open class Temperature(
+data class Temperature(
 
     @Id
     val id: String = "",
@@ -25,5 +25,4 @@ open class Temperature(
 
     val temp_min: BigDecimal = BigDecimal.ZERO
 
-): Serializable {
-}
+): Serializable

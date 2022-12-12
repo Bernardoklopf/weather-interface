@@ -7,7 +7,7 @@ import java.io.Serializable
 import java.math.BigDecimal
 
 @Entity
-open class City(
+data class City(
 
     @Id
     @Column(name = "id", nullable = false)
