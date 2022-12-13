@@ -23,7 +23,7 @@ class ForecastService(
             cityService.findOrCreateCity(cityId).let { city ->
                 try {
                     temperatureService.findOrRequestTemperatureForTomorrow(city).also {
-                        cityService.updateAndIncrementCityRequest(city)
+                        cityService.updateCity(city)
                     }
                 } catch (e: CityNotFoundException) {
                     cityService.setCityNotFoundFlag(city)

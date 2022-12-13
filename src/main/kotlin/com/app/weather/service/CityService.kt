@@ -14,7 +14,7 @@ class CityService(
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
     fun findOrCreateCity(id: Int): City = (
-            findByIdOrNull(id).also { logger.info("City already exists: $it") }
+            findByIdOrNull(id)
                 ?: cityRepository.save(City(id = id))
                     .also { logger.info("City id = $id not found. Creating new city.") }
             ).also { if (it.cityNotFound) throw InvalidCityCodeException("$id") }
@@ -29,11 +29,5 @@ class CityService(
         )
     }
 
-    fun updateAndIncrementCityRequest(city: City) = findByIdOrNull(city.id)?.let {
-        cityRepository.save(
-            it.copy(
-                numberOfRequests = it.numberOfRequests+1
-            )
-        )
-    }
+    fun updateCity(city: City) = findByIdOrNull(city.id)?.let {cityRepository.save(it)}
 }

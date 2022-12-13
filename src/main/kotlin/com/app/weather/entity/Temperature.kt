@@ -1,7 +1,7 @@
 package com.app.weather.entity
 
+import com.app.weather.entity.audit.model.AuditModel
 import jakarta.persistence.*
-import java.io.Serializable
 import java.math.BigDecimal
 import java.util.*
 
@@ -23,6 +23,9 @@ data class Temperature(
 
     val temp_max: BigDecimal = BigDecimal.ZERO,
 
-    val temp_min: BigDecimal = BigDecimal.ZERO
+    val temp_min: BigDecimal = BigDecimal.ZERO,
 
-): Serializable
+    @Version
+    val version: Long = 0
+
+): AuditModel()
