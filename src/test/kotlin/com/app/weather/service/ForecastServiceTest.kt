@@ -29,7 +29,7 @@ class ForecastServiceTest {
 
         forecastService = ForecastService(temperatureService, cityService)
 
-        every { cityService.updateAndIncrementCityRequest(any()) } returns null
+        every { cityService.incrementCityRequest(any()) } returns null
     }
 
     @AfterEach

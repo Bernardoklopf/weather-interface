@@ -33,7 +33,7 @@ class ArchitectureTest {
                 .layer("Repository").definedBy("..repository..")
                 .layer("Component").definedBy("..component..")
                 .whereLayer("Rest").mayNotBeAccessedByAnyLayer()
-                .whereLayer("Service").mayOnlyBeAccessedByLayers("Rest")
+                .whereLayer("Service").mayOnlyBeAccessedByLayers("Rest", "Component")
                 .whereLayer("Repository").mayOnlyBeAccessedByLayers("Service")
                 .whereLayer("Component").mayOnlyBeAccessedByLayers("Service")
                 .check(weatherAppClasses)
@@ -94,7 +94,7 @@ class ArchitectureTest {
         fun `Service should only be accessed be Rest or Services`(){
             classes()
                 .that().resideInAPackage("..service..")
-                .should().onlyBeAccessed().byAnyPackage("..service..","..rest..")
+                .should().onlyBeAccessed().byAnyPackage("..service..","..rest..","..component..")
                 .check(weatherAppClasses)
 
         }
@@ -202,25 +202,6 @@ class ArchitectureTest {
                 .that()
                 .resideOutsideOfPackage("..deserializers..")
                 .should(haveSufix("Deserializer"))
-                .check(weatherAppClasses)
-        }
-    }
-
-    @Nested
-    inner class PackageExtensions {
-
-        @Test
-        fun `naming convention`() {
-            classes()
-                .that()
-                .resideInAPackage("..extensions..")
-                .should(haveSufix("Extensions"))
-                .check(weatherAppClasses)
-
-            noClasses()
-                .that()
-                .resideOutsideOfPackage("..extensions..")
-                .should(haveSufix("Extensions"))
                 .check(weatherAppClasses)
         }
     }

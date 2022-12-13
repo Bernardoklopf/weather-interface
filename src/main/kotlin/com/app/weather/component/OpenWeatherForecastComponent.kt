@@ -4,6 +4,7 @@ import com.app.weather.entity.City
 import com.app.weather.enums.UnitType
 import com.app.weather.exceptions.CityNotFoundException
 import com.app.weather.exceptions.FailedToGetForecastException
+import com.app.weather.service.CityService
 import com.app.weather.util.extensions.parseJson
 import com.app.weather.vo.ForecastVo
 import com.app.weather.vo.WeatherVo
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class OpenWeatherForecastComponent {
+class OpenWeatherForecastComponent(private val cityService: CityService) {
 
     private val client = OkHttpClient().newBuilder().build()
 
@@ -34,8 +35,12 @@ class OpenWeatherForecastComponent {
         val response = client.newCall(request).execute()
 
         return when {
-            response.isSuccessful -> response.body!!.string().parseJson(ForecastVo::class)
-            response.message == "city not found" -> throw CityNotFoundException(city)
+            response.isSuccessful -> response.body!!.string().parseJson(ForecastVo::class).also {
+                cityService.updateCityInfo(city, it.city)
+            }
+            response.code == 404 -> throw CityNotFoundException(city).also {
+                cityService.setCityNotFoundFlagToTrue(city)
+            }
             else -> throw FailedToGetForecastException(request, response)
         }
     }
