@@ -16,7 +16,7 @@ In order to run locally, run de following commands:
    mvn spring-boot:run
    ```
 
-## Possible Improvements
+## Future Improvements
 
 1. Treat invalid user requests;
 2. Implement a cron to use the remaining calls of the day for the most required cities; 
